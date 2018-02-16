@@ -150,7 +150,85 @@ public class Game {
      */
     public String checkGameWinner(char [][]grid){
         String result = "None";
+        int xInColumn = 0;
+        int oInColumn = 0;
+        int xInRow = 0;
+        int oInRow = 0;
+        int xLeftRightDiagonal = 0;
+        int oLeftRightDiagonal = 0;
+        int xRightLeftDiagonal = 0;
+        int oRightLeftDiagonal = 0;
+        int isItTie = 0;
         //Student code goes here ...
+        for(int i = 0; i < grid.length; i++){
+            for(int j = 0; j < grid[i].length; j++) {
+                // x and o left - right diagonal win check
+                if (i == j && grid[i][j] == 'x'){
+                    xLeftRightDiagonal++;
+                }else if(i == j && grid[i][j] == 'o'){
+                    oLeftRightDiagonal++;
+                }
+
+                //x and o right - left diagonal win check
+                if (i + j == 2 && grid[i][j] == 'x'){
+                    xRightLeftDiagonal++;
+                }else if(i + j == 2 && grid[i][j] == 'o'){
+                    oRightLeftDiagonal++;
+                }
+
+                // x and o vertical win check
+                if (grid[i][j] == 'x') {
+                    xInColumn++;
+                }else if(grid[i][j] == 'o'){
+                    oInColumn++;
+                }
+
+                // x and o horizontal win check
+                if (grid[j][i] == 'x'){
+                    xInRow++;
+                }else if(grid[j][i] == 'o'){
+                    oInRow++;
+                }
+
+                //check if is tie
+                if(grid[i][j] != '-'){
+                    isItTie++;
+                }
+            }
+            if (xInColumn == 3 || xInRow == 3){
+                result = "X wins";
+                break;
+            }else{
+                xInColumn = 0;
+                xInRow = 0;
+            }
+            if (oInColumn == 3 || oInRow == 3){
+                result = "O wins";
+                break;
+            }else{
+                oInColumn = 0;
+                oInRow = 0;
+            }
+        }
+
+        if(oLeftRightDiagonal == 3 || oRightLeftDiagonal == 3){
+            result = "O wins";
+        }else{
+            oLeftRightDiagonal = 0;
+            oRightLeftDiagonal = 0;
+        }
+        if(xLeftRightDiagonal == 3 || xRightLeftDiagonal == 3){
+            result = "X wins";
+        }else{
+            xLeftRightDiagonal = 0;
+            xRightLeftDiagonal = 0;
+        }
+
+        if (isItTie == 9){
+            result = "Tie";
+        }else{
+            isItTie = 0;
+        }
         return result;
     }
 
